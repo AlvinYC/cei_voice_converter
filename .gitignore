@@ -1,3 +1,8 @@
+# alvin customize ignore
+log/
+output/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
