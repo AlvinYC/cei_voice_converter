@@ -32,16 +32,19 @@ if __name__ == '__main__':
     accent2speaker = read_speaker_info(os.path.join(root_dir, 'speaker-info.txt'))
     filename_groups = defaultdict(lambda : [])
     with h5py.File(h5py_path, 'w') as f_h5:
-        filenames = sorted(glob.glob(os.path.join(root_dir, 'wav48/*/*.wav')))
+        filenames = sorted(glob.glob(os.path.join(root_dir, '*.wav')))
         for filename in filenames:
             # divide into groups
             sub_filename = filename.strip().split('/')[-1]
+            if not bool(re.match(r'p\d+.*',sub_filename)):
+                continue
             # format: p{speaker}_{sid}.wav
+            # Britsh group since it's  speaker id is not start from p
             speaker_id, utt_id = re.match(r'p(\d+)_(\d+)\.wav', sub_filename).groups()
             filename_groups[speaker_id].append(filename)
         for speaker_id, filenames in filename_groups.items():
             # only use the speakers who are English accent.
-            if speaker_id not in accent2speaker['English']:
+            if 'p'+speaker_id not in accent2speaker['English']:
                 continue
             print('processing {}'.format(speaker_id))
             train_size = int(len(filenames) * proportion)
