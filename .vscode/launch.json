@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: 目前檔案",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            // preprocess 1
+            //"args":[ "./.data/", "./output/vctk_mic1.h5py", "0.9"]
+            // preprocess 2
+            //"args":[ "./output/vctk_mic1.h5py", "./output/vctk_mic1.json", "5000000", "128", "./preprocess/en_speaker_used.txt"]
+
+            // traing 
+            //"args": [
+            //    "-hps_path","./vctk.json",
+            //    "-dataset_path","./output/vctk_mic1.h5py",
+            //    "-index_path","./output/vctk_mic1.json",
+            //    "-output_model_path","./output/model_out/"
+            //]
+            // testing
+            "args": [
+                "-hps","./vctk.json",
+                "-m","./output/model_out/my_model",
+                "-s","./.data/p225_001.wav",
+                "-t","3",
+                "-o","./output/generate_voice/my_output.wav",
+                "-sr","16000",
+                //"--use_gen","True",
+            ]
+        }
+    ]
+}
+
