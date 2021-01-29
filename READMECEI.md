@@ -16,8 +16,21 @@ cd vctk_mic1
 rename 's/_mic1//' *.wav
 cd vctk_mic2
 rename 's/_mic2//' *.wav
-
 ```
+
+## after flac2wav
+if flac2wav output folder is VCTK_0.92_wav, it will be
+```
+.
+├── speaker-info.txt -> ../VCTK_0.92_flac/speaker-info.txt
+├── txt -> ../VCTK_0.92_flac/txt/
+├── update.txt -> ../VCTK_0.92_flac/update.txt
+├── wav48 -> ./wav48_mic1/
+├── wav48_mic1
+├── wav48_mic2
+└── wav48_silence_trimmed
+``` 
+
 
 ## VCTK
 

@@ -7,6 +7,7 @@ import re
 from collections import defaultdict
 #from tacotron.audio import load_wav, spectrogram, melspectrogram
 from tacotron.norm_utils import get_spectrograms 
+from pathlib import Path
 
 def read_speaker_info(path='/storage/datasets/VCTK/VCTK-Corpus/speaker-info.txt'):
     accent2speaker = defaultdict(lambda: [])
@@ -32,10 +33,11 @@ if __name__ == '__main__':
     accent2speaker = read_speaker_info(os.path.join(root_dir, 'speaker-info.txt'))
     filename_groups = defaultdict(lambda : [])
     with h5py.File(h5py_path, 'w') as f_h5:
-        filenames = sorted(glob.glob(os.path.join(root_dir, '*.wav')))
+        #filenames = sorted(glob.glob(os.path.join(root_dir, '*.wav')))
+        filenames = sorted(Path(root_dir).glob('./wav48/*/*.wav'))
         for filename in filenames:
             # divide into groups
-            sub_filename = filename.strip().split('/')[-1]
+            sub_filename = str(filename).strip().split('/')[-1]
             if not bool(re.match(r'p\d+.*',sub_filename)):
                 continue
             # format: p{speaker}_{sid}.wav
@@ -49,7 +51,7 @@ if __name__ == '__main__':
             print('processing {}'.format(speaker_id))
             train_size = int(len(filenames) * proportion)
             for i, filename in enumerate(filenames):
-                sub_filename = filename.strip().split('/')[-1]
+                sub_filename = str(filename).strip().split('/')[-1]
                 # format: p{speaker}_{sid}.wav
                 speaker_id, utt_id = re.match(r'p(\d+)_(\d+)\.wav', sub_filename).groups()
                 _, lin_spec = get_spectrograms(filename)
